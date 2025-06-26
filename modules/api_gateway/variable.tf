@@ -1,10 +1,39 @@
-variable "api_name" {}
-variable "stage_name" {}
-variable "region" {}
+# variable "api_name" { 
+#     type = string 
+# }
+# variable "stage_name" { 
+#     type = string
+#     default = "$default" 
+# }
+# variable "lambda_function_arn" { 
+#     type = string 
+# }
+# variable "tags" { 
+#     type = map(string) 
+# }
+
+# variable "lambda_function_name" {
+#   type = string
+# }
+######
+variable "api_name" {
+  type = string
+}
+
+variable "stage_name" {
+  type    = string
+  default = "$default"
+}
 
 variable "routes" {
-  type = map(object({
-    lambda_arn = string
+  description = "List of route definitions: each with lambda_arn, lambda_name, and path"
+  type = list(object({
+    path              = string
+    lambda_function_arn  = string
+    lambda_function_name = string
   }))
-  description = "Map of route key to Lambda ARN. E.g. { \"GET /hello\": { lambda_arn = \"arn:...\" } }"
+}
+
+variable "tags" {
+  type = map(string)
 }
